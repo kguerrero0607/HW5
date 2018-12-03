@@ -1,10 +1,11 @@
 {% extends 'index.html' %}
 
 {% block nav %}
-    {{ super() }}
+{{ super() }}
 {% endblock %}
 
 {% block content %}
+
 
 {% if not todo_lists %}
 There are no TODO lists to show.
@@ -12,18 +13,23 @@ There are no TODO lists to show.
 {% else %}
 
 <ul>
-{% for l in todo_lists %}
+    {% for l in todo_lists %}
     <li>
         <a href="{{ url_for('one_list',ident=l.id)}}">{{ l.title }}</a>
+
+        <form method="POST" action="/delete/{{ l.title }}">
+            {{ form.hidden_tag() }}
+            {{ form.submit() }}
+        </form>
     </li>
-{% endfor %}
+    {% endfor %}
 </ul>
 {% endif %}
 
 <div>
-{% for message in get_flashed_messages() %}
-<strong>*** {{ message }} ***</strong>
-{% endfor %}
+    {% for message in get_flashed_messages() %}
+    <strong>*** {{ message }} ***</strong>
+    {% endfor %}
 </div>
 
 {% endblock %}

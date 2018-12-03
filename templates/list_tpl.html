@@ -2,23 +2,29 @@
 {% extends 'index.html' %}
 
 {% block nav %}
-    {{ super() }}
+{{ super() }}
 {% endblock %}
 
 {% block content %}
 
 <ul>
-{% for item in items %}
+    {% for item in items %}
     <li>
-        {{ item.description }} - Priority: {{ item.priority }} 
+        {{ item.description }} - Priority: {{ item.priority }}
+
+        <form method="POST" action="/update/{{ item.description }}">
+            {{ form.hidden_tag() }}
+            {{ form.submit() }}
+        </form>
+
     </li>
-{% endfor %}
+    {% endfor %}
 </ul>
 
 <div>
-{% for message in get_flashed_messages() %}
-<strong>*** {{ message }} ***</strong>
-{% endfor %}
+    {% for message in get_flashed_messages() %}
+    <strong>*** {{ message }} ***</strong>
+    {% endfor %}
 </div>
 
 {% endblock %}
